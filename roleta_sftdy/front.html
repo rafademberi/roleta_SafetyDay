@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#061b39" />
+    <title>Roleta de Sorteio | Safety Day 2026</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+    <script src="animation.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Roleta de Sorteio">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-copy">
+            <strong>SAFETY <span>DAY</span></strong>
+            <small>SORTEIO DE PARTICIPANTES</small>
+          </span>
+        </a>
+        <span class="event-label"><span class="status-dot"></span> EDIÇÃO 2026</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">SEGURANÇA EM MOVIMENTO</p>
+        <h1 id="page-title">A sorte vai <span>girar.</span></h1>
+        <p class="intro-copy">Carregue a lista de participantes e descubra quem leva o próximo prêmio.</p>
+      </section>
+
+      <section class="draw-layout" aria-label="Sorteio">
+        <div class="wheel-panel">
+          <div class="wheel-frame">
+            <div class="pointer" aria-hidden="true"></div>
+            <canvas id="wheel" role="button" tabindex="0" aria-label="Roleta. Carregue uma planilha para começar o sorteio.">
+              Seu navegador não oferece suporte ao canvas.
+            </canvas>
+            <div class="wheel-center" aria-hidden="true"><span id="wheel-center-label">SORTEIO</span></div>
+          </div>
+          <p class="wheel-hint" id="wheel-hint">Sua próxima surpresa está a um giro de distância.</p>
+        </div>
+
+        <aside class="control-panel">
+          <div class="panel-heading">
+            <span class="step-number">01</span>
+            <div>
+              <h2>Prepare o sorteio</h2>
+              <p>Carregue uma planilha ou digite os nomes manualmente.</p>
+            </div>
+          </div>
+
+          <label class="upload-area" id="upload-area" for="file-input">
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v5h14v-5" />
+              </svg>
+            </span>
+            <strong>Escolher planilha</strong>
+            <span>ou arraste o arquivo até aqui</span>
+            <small>Excel .xlsx, .xls ou CSV</small>
+            <input id="file-input" type="file" accept=".xlsx,.xls,.csv" />
+          </label>
+
+          <div class="input-divider"><span>OU DIGITE OS NOMES</span></div>
+          <label class="manual-label" for="manual-names">Um participante por linha</label>
+          <textarea
+            class="manual-input"
+            id="manual-names"
+            rows="4"
+            placeholder="Ex.:&#10;Danielle Tenorio&#10;Rafael Silva&#10;Benjamin Augusto"
+          ></textarea>
+          <button class="button button-outline" id="manual-load-button" type="button">Usar estes nomes</button>
+
+          <p class="message" id="message" role="status" aria-live="polite"></p>
+
+          <div class="participants" id="participants-section" hidden>
+            <div class="participants-heading">
+              <h3>Participantes</h3>
+              <span class="count-badge" id="participant-count">0 participantes</span>
+            </div>
+            <ul id="participant-list"></ul>
+          </div>
+
+          <div class="result-card" id="result-card" aria-live="polite" hidden>
+            <span class="result-kicker">TEMOS UM VENCEDOR!</span>
+            <strong id="winner-name"></strong>
+            <span>Parabéns! 🎉</span>
+          </div>
+
+          <div class="actions">
+            <button class="button button-primary" id="spin-button" type="button" disabled>
+              <span>Girar a roleta</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="button button-secondary" id="remove-winner-button" type="button" hidden>
+              Remover vencedor e sortear de novo
+            </button>
+            <button class="button button-quiet" id="clear-button" type="button" hidden>Limpar e carregar outra planilha</button>
+          </div>
+
+          <p class="fairness-note">
+            <span aria-hidden="true">✦</span>
+            Sorteio aleatório e justo: cada participante tem a mesma chance.
+          </p>
+        </aside>
+      </section>
+
+      <footer class="page-footer">
+        <span>SAFETY DAY 2026</span>
+        <span class="footer-line"></span>
+        <span>BOA SORTE!</span>
+      </footer>
+    </main>
+    <canvas id="celebration-canvas" aria-hidden="true"></canvas>
+    <section class="winner-overlay" id="winner-overlay" role="dialog" aria-modal="true" aria-labelledby="winner-announcement" hidden>
+      <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+      <div class="winner-announcement">
+        <span class="winner-sparkle" aria-hidden="true">✦</span>
+        <p class="winner-kicker">O GRANDE VENCEDOR</p>
+        <h2 id="winner-announcement">Parabéns!</h2>
+        <p class="winner-message">Você ganhou! 🎉</p>
+        <div class="winner-actions">
+          <button class="button button-secondary" id="winner-remove" type="button">Remover da lista</button>
+          <button class="button button-primary" id="winner-keep" type="button">Manter na lista</button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
